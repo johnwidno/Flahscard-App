@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".acceuil_activity_page"
+    android:background="@color/bagroungcolor">
+
+    <ImageView
+        android:id="@+id/imagewelcome"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="100dp"
+        android:src="@mipmap/imageacueil2_foreground"
+        android:layout_alignBottom="@id/imagewelcome"
+        />
+
+    <TextView
+        android:id="@+id/messagebienvenu"
+        android:layout_below="@id/imagewelcome"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:gravity="center"
+        android:textSize="40sp"
+        android:layout_marginTop="40dp"
+        android:textColor="@color/black"
+        android:fontFamily="arial"
+        android:text="@string/welcometext"
+        android:textFontWeight="300"
+        />
+
+    <Button
+        android:id="@+id/btnStart"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/messagebienvenu"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="30dp"
+        android:text="@string/stasrtbtn"
+
+        android:textSize="20sp"
+        />
+
+
+
+</RelativeLayout>
