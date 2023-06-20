@@ -19,5 +19,6 @@
     <string name="labelvuetext">Toutes les questions </string>
     <string name="stasrtbtn">Get started</string>
     <string name="welcometext">Welcome to your Flashcard App</string>
+    <string name="Nbseconde">10</string>
 
 </resources>

@@ -5,12 +5,11 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
-import android.animation.Animator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -21,12 +20,33 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
     private int curentquestionreponseposition=1;
+    CountDownTimer countDownTimer = null;
+
+
     int retour=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+
+        CountDownTimer countDownTimer = new CountDownTimer(16000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                TextView timerTextView = findViewById(R.id.timer);
+                timerTextView.setText(String.valueOf(millisUntilFinished / 1000));
+            }
+
+            @Override
+            public void onFinish() {
+                // Do something when the countdown finishes
+            }
+        };
+
+        countDownTimer.cancel();
+        countDownTimer.start();
 
       Animation leftOutAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.left_out);
       Animation rightInAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.right_in);
@@ -36,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         TextView  txtanswer1 = findViewById(R.id.txtVanswer1);
         TextView  txtanswer2 = findViewById(R.id.txtVanswer2);
         TextView  txtanswer3 = findViewById(R.id.txtVanswer3);
+
+
 
         txtanswer1.setVisibility(View.INVISIBLE);
         txtanswer2.setVisibility(View.INVISIBLE);
@@ -113,6 +135,8 @@ public class MainActivity extends AppCompatActivity {
         QuestionReponseDatabase dbbase= Room.databaseBuilder(getApplicationContext(),QuestionReponseDatabase.class,"mydatabase").allowMainThreadQueries().build();
         /////////////////////////              PREVIOUS BUTTON               /////////////////////////////////////////////////////////
         previoustbnt.setOnClickListener(view -> {
+            countDownTimer.cancel();
+            countDownTimer.start();
 
                 Intent intent = new Intent(MainActivity.this, MainActivity.class);
                 activityLancher.launch(intent);
@@ -126,13 +150,20 @@ public class MainActivity extends AppCompatActivity {
 
 
         });
+
  /////////////////////////                 NEXT BUTTON /////////////////////////////////////////////////////////
 
         nextbtn.setOnClickListener(view -> {
             // Call the question and answer by getquestionreponsparId created in our DAO CLASS
             QuestionReponse Quetionreponsesuuivant =  dbbase.questionreponseDAO().getquestionreponsparnext(curentquestionreponseposition,curentquestionreponseposition);
+            countDownTimer.cancel();
+            countDownTimer.start();
+
+
+
 
             if(Quetionreponsesuuivant != null){
+
                 txtquestion.setText(Quetionreponsesuuivant.Question);
                 txtanswer1.setText(Quetionreponsesuuivant.Answer_1);
                 txtanswer2.setText(Quetionreponsesuuivant.Answer_2);
@@ -143,6 +174,29 @@ public class MainActivity extends AppCompatActivity {
                 txtanswer2.startAnimation(leftOutAnim);
                 txtanswer3.startAnimation(leftOutAnim);
                 curentquestionreponseposition = curentquestionreponseposition + 1;
+                findViewById(R.id.questiontextview).animate()
+                        .rotationY(90f)
+                        .setDuration(200)
+                        .withEndAction(new Runnable() {
+                            @Override
+                            public void run() {
+                                txtquestion.setVisibility(View.VISIBLE);
+                                //findViewById(R.id.txtVanswer1).setVisibility(View.VISIBLE);
+                                // second quarter turn
+
+                                findViewById(R.id.questiontextview).setRotationY(-90f);
+                                findViewById(R.id.questiontextview).animate()
+                                        .rotationY(0f)
+                                        .setDuration(200)
+                                        .start();
+                            }
+                        })
+                        .start();
+
+
+
+
+
 
                 Log.d("question", ""+curentquestionreponseposition +" question"+Quetionreponsesuuivant.ID +"retaou id " +retour);
 
