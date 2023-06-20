@@ -3,11 +3,12 @@
 ## Lab 4
 
 ### App Description
+In this lab we have added styles to the flashcard appp.
 
 ### App Walk-though
 
 
-<img src="YOUR_GIF_URL_HERE" width=200><br>
+<img src="https://github.com/johnwidno/Flahscard-App/assets/100108327/fe177736-b96e-4284-a424-5c7f07ecbe28" width=200><br>
 
 
 ## Required
